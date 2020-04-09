@@ -1,1 +1,1 @@
-# Leetcode solutions
+# Leetcode solutions written in Typescript
