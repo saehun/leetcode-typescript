@@ -4,3 +4,4 @@
 ## Acknowledgement
 - Use memoization
 - Don't use global cache
+- Use DP

@@ -1,5 +1,9 @@
 type WordBreak = (s: string, wordDict: string[]) => boolean;
 
+
+/**
+ * Memoization version
+ */
 const matchRecur = (s: string, wordDict: string[], result: boolean, cache: any): boolean => {
   if (cache[s]) return false;
 
@@ -19,35 +23,35 @@ const matchRecur = (s: string, wordDict: string[], result: boolean, cache: any):
   return result;
 };
 
-const wordBreak: WordBreak = function(s, wordDict) {
+const Memoization: WordBreak = function(s, wordDict) {
   const cache = {};
   return matchRecur(s, wordDict, false, cache);
 };
 
 
-/** Fail - time limit
-  if (s.length === 0) return true;
-  return wordDict.reduce(
-    (result, word) => {
-      if (word.length > s.length) return result;
-      return result || (s.startsWith(word) ? wordBreak(s.slice(word.length), wordDict) : false);
-    },
-    false);
-*/
 /**
- *
-
-applepenapple
-1111100011111
-0000011100000
-
-catsandog
-111100000
-000000111
-000111100
-000011100
-111000000
-
+ * Dynamic programming version
  */
+const DP: WordBreak = function(s, wordDict) {
+  const cache: any = { "-1": true };
+  for (let i = -1; i < s.length - 1; i++) {
+    if (!cache[i]) continue;
+    for (const word of wordDict) {
+      if (cache[i + word.length]) continue;
+      if (s.startsWith(word, i + 1)) {
+        cache[i + word.length] = true;
+        if (i + word.length === s.length - 1) return true;
+      }
+    }
+  }
 
-export default wordBreak;
+  return false;
+};
+
+export default {
+  default: DP,
+  candidates: {
+    Memoization,
+    DP,
+  },
+};
