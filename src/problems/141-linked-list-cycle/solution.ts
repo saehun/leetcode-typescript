@@ -4,13 +4,26 @@ interface LinkedList {
   visit?: boolean;
 }
 
-const Solution = (head: LinkedList): boolean => {
-  if (!head || !head.next) return false;
+const Flag = (head: LinkedList): boolean => {
+  if (!head.next) return false;
   if (head.next.visit) return true;
   head.visit = true;
-  return Solution(head.next);
+  return Flag(head.next);
+};
+
+const Floyd = (head: LinkedList): boolean => {
+  let cur = head;
+  let fast = head;
+  while (fast && fast.next) {
+    fast = fast.next.next;
+    cur = cur.next;
+    if (cur === fast) return true;
+  }
+  return false;
 };
 
 export default {
-  "default": Solution,
+  "default": Floyd,
+  Floyd,
+  Flag,
 };
