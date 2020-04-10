@@ -49,9 +49,7 @@ const DP: WordBreak = function(s, wordDict) {
 };
 
 export default {
-  default: DP,
-  candidates: {
-    Memoization,
-    DP,
-  },
+  "default": DP,
+  Memoization,
+  DP,
 };
