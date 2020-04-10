@@ -5,9 +5,17 @@ import chalk from "chalk";
 
 const problems: Record<string, any> = raw;
 const run = (fn: any, test: { input: unknown[]; output: unknown }, title: string) => {
+
+  let inputString = "";
+  try {
+    inputString = JSON.stringify(test.input);
+  } catch (e) {
+    inputString = (e.message);
+  }
+
   console.log(`
 ${title} runs:
-- input: ${JSON.stringify(test.input)}
+- input: ${inputString}
 - output:
     - expected: ${JSON.stringify(test.output)}`);
   const result = fn(...test.input);
