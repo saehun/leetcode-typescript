@@ -1,4 +1,4 @@
-import * as problem139 from "./139-word-break";
+import * as problems from "./problems";
 import R from "ramda";
 const run = (fn: any, test: { input: unknown[]; output: unknown }, title: string) => {
 
@@ -17,9 +17,6 @@ ${title} runs:
 };
 
 function main() {
-  for (const test of problem139.testcase) {
-    run(problem139.solution, test, "139-word-break");
-  }
 }
 
 main();
