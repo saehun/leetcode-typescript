@@ -21,58 +21,104 @@ class LRUCache {
     this.capacity = capacity;
     this.used = 0;
     this.cache = {};
-    this.head = { key: -2, next: null, prev: null };
-    this.tail = { key: -3, next: null, prev: this.head };
-    this.head.next = this.tail;
+    this.head = null;
+    this.tail = null;
   }
 
+  _updateUsedNode(node: Node) {
+    const { prev, next } = node;
+    // Unlink node's nodes
+    node.prev = null;
+    node.next = null;
+    if (prev) {
+      const prev2 = prev.prev;
+      // Unlink prev's nodes
+      prev.prev = null;
+      prev.next = null;
+
+
+      node.next = prev;
+      prev.prev = node;
+
+
+      if (prev2) {
+        node.prev = prev2;
+        prev2.next = node;
+      } else {
+        this.head = node;
+      }
+
+      if (next) {
+        prev.next = next;
+        next.prev = prev;
+      } else {
+        this.tail = prev;
+      }
+    } else {
+      if (next) {
+        // Do nothing
+      } else {
+        this.head = node;
+        this.tail = node;
+      }
+    }
+  }
+
+  _removeLCU() {
+    const { prev, key } = this.tail;
+    /* console.log(`key ${key} evicted`); */
+    delete this.cache[key];
+    prev.next = null;
+    this.tail = prev;
+  }
+
+  /*
+  __describeNode() {
+    let cur = this.head;
+    const values = [];
+    for (let i = 0; i < 10; i++) {
+      if (!cur) break;
+      values.push(this.cache[cur.key].value);
+      cur = cur.next;
+    }
+    return values.join("-");
+  }
+  */
+
   get(key: number) {
-    console.log("head:", this.head.next?.key, "tail:", this.tail.prev?.key);
+    /* console.log(`get(${key})   ::`, this.__describeNode(), "head:", this.head?.key, "tail:", this.tail?.key); */
     const item = this.cache[key];
     if (item) {
-      const { prev, next } = item.node;
-      prev.next = next;
-      item.node.next = prev;
-      if (prev.prev) {
-        prev.prev.next = item.node;
-      }
-      prev.prev = item.node;
-      if (next) next.prev = prev;
-      console.log(`get(${key}): ${item.value}`);
+      this._updateUsedNode(item.node);
       return item.value;
     } else {
-      console.log(`get(${key}): -1`);
+      /* console.log(`get(${key}): -1`); */
       return -1;
     }
   }
 
   put(key: number, value: number) {
-    console.log("head:", this.head.next?.key, "tail:", this.tail.prev?.key);
+    /* console.log(`put(${key}, ${value})::`, this.__describeNode(), "head:", this.head?.key, "tail:", this.tail?.key); */
     let item = this.cache[key];
-    if (item) {
-      this.get(key);
-      item.value = value;
-      console.log(`put(${key}, ${value}). item exist`);
-      return;
-    }
-
-    console.log(`put(${key}, ${value}).`);
-    const node: Node = { key, next: this.head.next, prev: this.head };
-    item = { node, value };
-    this.cache[key] = item;
-    this.head.next = node;
-
-    if (!this.tail.prev) {
-      this.tail.prev = node;
-    }
-
-    if (this.capacity === this.used) {
-      const leastUsedNode = this.tail.prev;
-      console.log(`evicts key ${leastUsedNode.key}`);
-      delete this.cache[leastUsedNode.key];
-      this.tail.prev = this.tail.prev.prev;
+    if (!item) {
+      const node: Node = { key, next: null, prev: null };
+      item = { node, value };
+      this.cache[key] = item;
+      if (this.head) {
+        node.next = this.head;
+        this.head.prev = node;
+        this.head = node;
+      } else {
+        this._updateUsedNode(node);
+      }
+      if (this.used === this.capacity) {
+        this._removeLCU();
+      } else {
+        this.used++;
+      }
     } else {
-      this.used++;
+      item.value = value;
+      this._updateUsedNode(item.node);
     }
   }
 }
