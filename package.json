@@ -5,7 +5,7 @@
   "author": "minidonut <nycom13@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "solve": "ts-node src/index.ts run"
   },
   "devDependencies": {
     "@types/node": "^13.11.1",

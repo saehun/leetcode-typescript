@@ -4,22 +4,22 @@ import { program } from "commander";
 import chalk from "chalk";
 
 const problems: Record<string, any> = raw;
-const run = (fn: any, test: { input: unknown[]; output: unknown }, title: string) => {
-
-  let inputString = "";
+const toString = (obj: any) => {
   try {
-    inputString = JSON.stringify(test.input);
+    return JSON.stringify(obj);
   } catch (e) {
-    inputString = (e.message);
+    return e.message;
   }
+};
+const run = (fn: any, test: { input: unknown[]; output: unknown }, title: string) => {
 
   console.log(`
 ${title} runs:
-- input: ${inputString}
+- input: ${toString(test.input)}
 - output:
-    - expected: ${JSON.stringify(test.output)}`);
+    - expected: ${toString(test.output)}`);
   const result = fn(...test.input);
-  console.log(`    - received: ${JSON.stringify(result)}`);
+  console.log(`    - received: ${toString(result)}`);
   if (R.equals(result, test.output)) {
     console.log(`- result: ${chalk.green("success")}`);
   } else {
