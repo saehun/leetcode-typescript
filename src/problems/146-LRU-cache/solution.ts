@@ -1,3 +1,4 @@
+import chalk from "chalk";
 
 type Node = {
   key: number;
@@ -56,7 +57,7 @@ class LRUCache {
       }
     } else {
       if (next) {
-        // Do nothing
+        node.next = next;
       } else {
         this.head = node;
         this.tail = node;
@@ -72,21 +73,23 @@ class LRUCache {
     this.tail = prev;
   }
 
-  /*
   __describeNode() {
     let cur = this.head;
     const values = [];
+    const keys = [];
     for (let i = 0; i < 10; i++) {
       if (!cur) break;
+      keys.push(cur.key);
       values.push(this.cache[cur.key].value);
       cur = cur.next;
     }
-    return values.join("-");
+    console.log("KEY  :", keys.map(x => `[${chalk.yellow(String(x).padEnd(2))}]`).join("-"));
+    console.log("VALUE:", values.map(x => `[${chalk.green(String(x).padEnd(2))}]`).join("-"));
   }
-  */
 
   get(key: number) {
-    /* console.log(`get(${key})   ::`, this.__describeNode(), "head:", this.head?.key, "tail:", this.tail?.key); */
+    this.__describeNode();
+    console.log(`get(${key})`);
     const item = this.cache[key];
     if (item) {
       this._updateUsedNode(item.node);
@@ -98,7 +101,8 @@ class LRUCache {
   }
 
   put(key: number, value: number) {
-    /* console.log(`put(${key}, ${value})::`, this.__describeNode(), "head:", this.head?.key, "tail:", this.tail?.key); */
+    this.__describeNode();
+    console.log(`put(${key})`);
     let item = this.cache[key];
     if (!item) {
       const node: Node = { key, next: null, prev: null };
@@ -123,10 +127,17 @@ class LRUCache {
   }
 }
 
-const executor = (capacity: number, ...scripts: string[]) => {
-  const cache = new LRUCache(capacity);
-  scripts.forEach((line) => {
-    eval(line);
+const expected = [undefined, undefined, undefined, undefined, undefined, undefined, -1, undefined, 19, 17, undefined, -1, undefined, undefined, undefined, -1, undefined, -1, 5, -1, 12, undefined, undefined, 3, 5, 5, undefined, undefined, 1, undefined, -1, undefined, 30, 5, 30, undefined, undefined, undefined, -1, undefined, -1, 24, undefined, undefined, 18, undefined, undefined, undefined, undefined, -1, undefined, undefined, 18, undefined, undefined, -1, undefined, undefined, undefined, undefined, undefined, 18, undefined, undefined, -1, undefined, 4, 29, 30, undefined, 12, -1, undefined, undefined, undefined, undefined, 29, undefined, undefined, undefined, undefined, 17, 22, 18, undefined, undefined, undefined, -1, undefined, undefined, undefined, 20, undefined, undefined, undefined, -1, 18, 18, undefined, undefined, undefined, undefined, 20, undefined, undefined, undefined, undefined, undefined, undefined, undefined];
+
+const executor = (commands: string[], args: number[][]) => {
+  const cache = new LRUCache(args[0][0]);
+  commands.forEach((command, i) => {
+    if (i == 0) return;
+    const arg = args[i];
+    const result = eval(`cache.${command}(...${JSON.stringify(arg)})`);
+    console.log("EXPECTED::", expected[i]);
+    console.log("RESULT  ::", result, result === expected[i] ? chalk.green("success!!") : chalk.red("fail"));
+
   });
   return true;
 };
