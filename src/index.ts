@@ -11,16 +11,16 @@ const toString = (obj: any) => {
     return e.message;
   }
 };
-const run = (fn: any, test: { input: unknown[]; output: unknown }, title: string) => {
+const run = (fn: any, validator: any, test: { input: unknown[]; output: unknown }, title: string) => {
 
   console.log(`
 ${title} runs:
 - input: ${toString(test.input)}
 - output:
-    - expected: ${toString(test.output)}`);
+    - expected: ${toString(validator(test.output))}`);
   const result = fn(...test.input);
   console.log(`    - received: ${toString(result)}`);
-  if (R.equals(result, test.output)) {
+  if (R.equals(result, validator(test.output))) {
     console.log(`- result: ${chalk.green("success")}`);
   } else {
     console.log(`- result: ${chalk.red("fail")}`);
@@ -45,6 +45,7 @@ program
     }
     console.log(`Solve the problem ${chalk.yellow(problemId)} using ${chalk.yellow(solutionName)} solution`);
     const solution = problem.solution["default"];
+    const validator = problem.solution.validator || ((x: any) => x);
 
     if (!solution) {
       console.log(`No solution named ${chalk.yellow(solutionName)} of problem id ${chalk.yellow(problemId)} was found.`);
@@ -65,6 +66,7 @@ program
     testcases.forEach((testcase, i) => {
       run(
         solution,
+        validator,
         testcase,
         `testcase-${chalk.yellow(i)}`
       );
