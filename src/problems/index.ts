@@ -4,3 +4,4 @@ export * as p142 from "./142-linked-list-cycle-ii";
 export * as p146 from "./146-LRU-cache";
 export * as p148 from "./148-sort-list";
 export * as p152 from "./152-maximum-product-subarray";
+export * as p20 from "./20-valid-parentheses";
