@@ -1,0 +1,4 @@
+export default [
+  { input: [[2, 2, 1]], output: 1 },
+  { input: [[4, 1, 2, 1, 2]], output: 4 },
+];
