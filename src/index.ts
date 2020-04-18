@@ -12,15 +12,14 @@ const toString = (obj: any) => {
   }
 };
 const run = (fn: any, validator: any, test: { input: unknown[]; output: unknown }, title: string) => {
-
   console.log(`
 ${title} runs:
 - input: ${toString(test.input)}
 - output:
     - expected: ${toString(validator(test.output))}`);
   const result = fn(...test.input);
-  console.log(`    - received: ${toString(result)}`);
-  if (R.equals(result, validator(test.output))) {
+  console.log(`    - received: ${toString(validator(result))}`);
+  if (R.equals(validator(result), validator(test.output))) {
     console.log(`- result: ${chalk.green("success")}`);
   } else {
     console.log(`- result: ${chalk.red("fail")}`);
