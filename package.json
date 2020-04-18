@@ -6,10 +6,12 @@
   "license": "MIT",
   "scripts": {
     "solve": "ts-node src/index.ts run",
-    "build": "tsc"
+    "build": "tsc",
+    "next": "ts-node src/scripts/new-problem.ts"
   },
   "devDependencies": {
     "@types/node": "^13.11.1",
+    "@types/prompts": "^2.0.5",
     "@types/ramda": "^0.27.3",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
@@ -20,6 +22,8 @@
   "dependencies": {
     "chalk": "^4.0.0",
     "commander": "^5.0.0",
+    "directory-tree": "^2.2.4",
+    "prompts": "^2.3.2",
     "ramda": "^0.27.0"
   }
 }
