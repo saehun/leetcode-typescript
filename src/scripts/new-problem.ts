@@ -37,10 +37,12 @@ const SOLUTION = () => `const Solution = () => { };
 
 export default {
   "default": Solution,
+  validator: (x: any) => x,
 };
 `;
 
-const EXPORTS = (folderName: string, id: string) => `export * as p${id} from "./${folderName}";`;
+const EXPORTS = (folderName: string, id: string) => `export * as p${id} from "./${folderName}";
+`;
 
 
 (async () => {
