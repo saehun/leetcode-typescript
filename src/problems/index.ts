@@ -12,3 +12,4 @@ export * as p1 from "./1-two-sum";
 export * as p53 from "./53-maximum-subarray";
 export * as p155 from "./155-min-stack";
 export * as p160 from "./160-intersection-of-two-linked-lists";
+export * as p169 from "./169-majority-element";
