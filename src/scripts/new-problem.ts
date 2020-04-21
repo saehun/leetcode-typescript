@@ -20,7 +20,7 @@ const toUpperCase = (s: string) => {
 
 const README = (name: string) =>
   `# ${toUpperCase(name)}
-[link](https://leetcode.com/problems/${toDashed(name)});
+[link](https://leetcode.com/problems/${toDashed(name)})
 
 ## Acknowledgement`;
 
