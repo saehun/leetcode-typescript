@@ -1,5 +1,3 @@
-
-
 class MinStack {
   arr: number[];
   min: number;
