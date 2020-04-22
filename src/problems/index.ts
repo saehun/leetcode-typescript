@@ -25,3 +25,4 @@ export * as p617 from "./617-merge-two-binary-trees";
 export * as p101 from "./101-symmetric-tree";
 export * as p104 from "./104-maximum-depth-of-binary-tree";
 export * as p70 from "./70-climbing-stairs";
+export * as p198 from "./198-house-robber";
