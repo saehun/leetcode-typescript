@@ -15,3 +15,5 @@ export * as p160 from "./160-intersection-of-two-linked-lists";
 export * as p169 from "./169-majority-element";
 export * as p206 from "./206-reverse-linked-list";
 export * as p226 from "./226-invert-binary-tree";
+export * as p234 from "./234-palindrome-linked-list";
+export * as p283 from "./283-move-zeros";
