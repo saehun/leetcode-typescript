@@ -1,3 +1,5 @@
+import { Tree } from "../../helpers";
+
 export default [
-  { input: [0], output: true },
+  { input: [Tree.from([1, 2, 3, 4, 5])], output: 3 },
 ];
