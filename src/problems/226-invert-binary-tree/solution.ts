@@ -1,8 +1,4 @@
-interface TreeNode {
-  val: any;
-  left: TreeNode;
-  right: TreeNode;
-}
+import { TreeNode } from "../../helpers";
 
 const invertTree = (root: TreeNode): TreeNode => {
   if (!root) return null;
