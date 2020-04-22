@@ -19,3 +19,4 @@ export * as p234 from "./234-palindrome-linked-list";
 export * as p283 from "./283-move-zeros";
 export * as p437 from "./437-path-sum-iii";
 export * as p448 from "./448-find-all-numbers-disappeared-in-an-array";
+export * as p543 from "./543-diameter-of-binary-tree";
