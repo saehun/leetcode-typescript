@@ -1,31 +1,29 @@
 const Solution = (nums: number[]): number[][] => {
-  const cache: any = {};
+  const result: any[] = [];
+  nums.sort((a, b) => (a - b));
+
   for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      const key = nums[i] + nums[j];
-      if (cache[key]) {
-        cache[key].push([i, j]);
+    let low = i + 1;
+    let high = nums.length - 1;
+    while (low < high) {
+      const sum = nums[i] + nums[low] + nums[high];
+      if (sum === 0) {
+        result.push([nums[i], nums[low], nums[high]]);
+        while (nums[low] === nums[low + 1]) low++;
+        while (nums[high] === nums[high - 1]) high--;
+        low++;
+        high--;
+      } else if (sum > 0) {
+        high--;
       } else {
-        cache[key] = [[i, j]];
+        low++;
       }
     }
+    while (nums[i] === nums[i + 1]) i++;
   }
 
-  const resultMap: any = {};
-  for (let i = 0; i < nums.length; i++) {
-    const candidates = cache[-nums[i]];
-    if (!candidates) continue;
 
-    for (const arr of candidates) {
-      if (!arr.includes(i)) {
-        const tmp = [nums[arr[0]], nums[arr[1]], nums[i]];
-        tmp.sort((a, b) => a - b);
-        resultMap[tmp.join(" ")] = tmp;
-      }
-    }
-  }
-
-  return Object.values(resultMap);
+  return result;
 };
 
 export default {

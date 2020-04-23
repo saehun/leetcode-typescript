@@ -21,6 +21,7 @@ export type LinkedList = {
 }
 
 export const List = {
-  toList,
+  toList, // old naming;
+  from: toList, // new api name
   toString
 };
