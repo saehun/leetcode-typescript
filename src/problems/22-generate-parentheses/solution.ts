@@ -1,20 +1,26 @@
 const Solution = (n: number): string[] => {
   if (n === 0) return [];
-  const result: string[][] = [["()"]];
-  for (let i = 1; i < n; i++) {
-    const set = new Set<string>();
-    for (const item of result[i - 1]) {
-      set.add("()" + item);
-      set.add(item + "()");
-      set.add(`(${item})`);
+  if (n === 1) return ["()"];
+  const result: any = [[["(", n - 1, n]], [["()", n - 1, n - 1], ["((", n - 2, n]]];
+  for (let i = 2; i < n * 2; i++) {
+    const before = result[i - 1];
+    const next = [];
+    for (const item of before) {
+      if (item[1] === 0) {
+        next.push([item[0] + ")", 0, item[2] - 1]);
+      } else if (item[1] === item[2]) {
+        next.push([item[0] + "(", item[1] - 1, item[2]]);
+      } else {
+        next.push([item[0] + "(", item[1] - 1, item[2]]);
+        next.push([item[0] + ")", item[1], item[2] - 1]);
+      }
     }
-    result[i] = Array.from(set);
+    result[i] = next;
   }
-  console.log(result[n - 1]);
-  return result[n - 1];
+  return result[n * 2 - 1].map((x: any) => x[0]);
 };
 
 export default {
   "default": Solution,
-  validator: (x: any) => x,
+  validator: (x: any) => x.sort().join("-"),
 };
