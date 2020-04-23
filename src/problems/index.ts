@@ -33,3 +33,4 @@ export * as p46 from "./46-permutations";
 export * as p48 from "./48-rotate-image";
 export * as p3 from "./3-longest-substring-without-repeating-characters";
 export * as p19 from "./19-remove-nth-node-from-end-of-list";
+export * as p22 from "./22-generate-parentheses";
