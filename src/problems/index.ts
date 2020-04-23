@@ -29,3 +29,4 @@ export * as p198 from "./198-house-robber";
 export * as p15 from "./15-3sum";
 export * as p2 from "./2-add-two-numbers";
 export * as p17 from "./17-letter-combinations-of-a-phone-number";
+export * as p46 from "./46-permutations";
