@@ -22,7 +22,6 @@ const Solution = (nums: number[]): number[][] => {
     while (nums[i] === nums[i + 1]) i++;
   }
 
-
   return result;
 };
 
