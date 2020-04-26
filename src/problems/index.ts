@@ -35,3 +35,4 @@ export * as p3 from "./3-longest-substring-without-repeating-characters";
 export * as p19 from "./19-remove-nth-node-from-end-of-list";
 export * as p22 from "./22-generate-parentheses";
 export * as p78 from "./78-subsets";
+export * as p49 from "./49-group-anagrams";
