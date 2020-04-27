@@ -36,3 +36,4 @@ export * as p19 from "./19-remove-nth-node-from-end-of-list";
 export * as p22 from "./22-generate-parentheses";
 export * as p78 from "./78-subsets";
 export * as p49 from "./49-group-anagrams";
+export * as p438 from "./438-find-all-anagrams-in-a-string";
