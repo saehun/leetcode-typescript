@@ -1,37 +1,27 @@
 
 const Solution = (s: string, p: string): number[] => {
+  const key = p.split("").reduce((acc: any, n) => acc[n] ? (acc[n]++, acc) : (acc[n] = 1, acc), {});
+  const table = Array(s.length).fill(undefined).map(() => ({ ...key }));
   const result: number[] = [];
-  const table: any = p.split("").reduce((acc: any, n) => {
-    if (n in acc) {
-      acc[n]--;
-    } else {
-      acc[n] = -1;
-    }
-    return acc;
-  }, {});
 
-  for (let i = 0; i < p.length; i++) {
-    const char = s[i];
-    if (char in table) {
-      table[char]++;
+  for (let i = 0; i < s.length; i++) {
+    for (let j = Math.max(i - p.length + 1, 0); j <= i; j++) {
+      if (s[i] in table[j]) {
+        const occur = table[j][s[i]] - 1;
+        if (occur === 0) {
+          delete table[j][s[i]];
+        } else {
+          table[j][s[i]] = occur - 1;
+        }
+      }
     }
   }
-  if (!Object.values(table).reduce((acc: any, n) => acc || n, false)) {
-    result.push(0);
-  }
-  for (let i = p.length; i < s.length; i++) {
-    const char = s[i];
-    const rmChar = s[i - p.length];
-    if (char in table) {
-      table[char]++;
+
+  table.forEach((occurs, i) => {
+    if (Object.keys(occurs).length === 0) {
+      result.push(i);
     }
-    if (rmChar in table) {
-      table[rmChar]--;
-    }
-    if (!Object.values(table).reduce((acc: any, n) => acc || n, false)) {
-      result.push(i - p.length + 1);
-    }
-  }
+  });
 
   return result;
 };
