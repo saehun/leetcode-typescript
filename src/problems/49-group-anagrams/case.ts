@@ -1,3 +1,3 @@
 export default [
-  { input: [0], output: true },
+  { input: [["eat", "tea", "tan", "ate", "nat", "bat"]], output: true },
 ];
