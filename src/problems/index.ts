@@ -39,3 +39,4 @@ export * as p49 from "./49-group-anagrams";
 export * as p438 from "./438-find-all-anagrams-in-a-string";
 export * as p338 from "./338-counting-bits";
 export * as p32 from "./32-longest-valid-parentheses";
+export * as p394 from "./394-decode-string";
