@@ -1,5 +1,29 @@
+// time: 66%, space: 50%
+const Solution2 = (s: string): number => {
+  const stack = [];
+  let max = 0;
+  const cache: any = {};
 
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    if (char === ")") {
+      if (stack.length === 0) {
+        continue;
+      } else {
+        const matched = stack.pop();
+        const length = i - matched + 1 + (cache[matched - 1] || 0);
+        max = Math.max(length, max);
+        cache[i] = length;
+      }
+    } else {
+      stack.push(i);
+    }
+  }
 
+  return max;
+};
+
+// time: 80%, space: 100% ...why?
 const Solution = (s: string): number => {
   const stack = [];
   const check = Array(s.length).fill(false);
