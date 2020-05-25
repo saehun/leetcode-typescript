@@ -41,9 +41,6 @@ export default {
 };
 `;
 
-const EXPORTS = (folderName: string, id: string) => `export * as p${id} from "./${folderName}";
-`;
-
 
 (async () => {
   const { id } = await prompts({
@@ -93,7 +90,7 @@ ${chalk.green("+")}/src/problems/${folderName}/README.md
 ${chalk.green("+")}/src/problems/${folderName}/index.ts
 ${chalk.green("+")}/src/problems/${folderName}/solution.ts
 ${chalk.green("+")}/src/problems/${folderName}/case.ts
-${chalk.yellow("+")}/src/problems/index.ts`
+`
   });
 
   if (confirm.yes) {
@@ -103,7 +100,6 @@ ${chalk.yellow("+")}/src/problems/index.ts`
     fs.writeFileSync(path.join(basePath, folderName, "case.ts"), CASE());
     fs.writeFileSync(path.join(basePath, folderName, "index.ts"), INDEX());
     fs.writeFileSync(path.join(basePath, folderName, "solution.ts"), SOLUTION());
-    fs.appendFileSync(path.join(basePath, "index.ts"), EXPORTS(folderName, id));
   } else {
     console.log("Canceled");
     process.exit(0);
