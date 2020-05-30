@@ -5,7 +5,7 @@
   "author": "minidonut <nycom13@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "solve": "ts-node src/index.ts run",
+    "solve": "./run.sh",
     "build": "tsc",
     "next": "node dist/scripts/new-problem.js"
   },
@@ -23,6 +23,7 @@
     "chalk": "^4.0.0",
     "commander": "^5.0.0",
     "directory-tree": "^2.2.4",
+    "execa": "^4.0.2",
     "prompts": "^2.3.2",
     "ramda": "^0.27.0"
   }
