@@ -7,7 +7,8 @@
   "scripts": {
     "solve": "./run.sh",
     "build": "tsc",
-    "next": "node dist/scripts/new-problem.js"
+    "open": "ts-node src/scripts/open.ts",
+    "next": "ts-node src/scripts/new-problem.ts"
   },
   "devDependencies": {
     "@types/node": "^13.11.1",
