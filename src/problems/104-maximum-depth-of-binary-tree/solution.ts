@@ -2,15 +2,15 @@ import { TreeNode } from "../../helpers";
 
 const Solution = (root: TreeNode): number => {
   let max = 0;
-  const traverse = (node: TreeNode, depth: number) => {
-    const { left, right } = node;
+  const dfs = (node: TreeNode, depth: number) => {
+    if (!node) return;
     max = Math.max(max, depth);
-
-    left && traverse(left, depth + 1);
-    right && traverse(right, depth + 1);
+    dfs(node.left, depth + 1);
+    dfs(node.right, depth + 1);
   };
 
-  root && traverse(root, 1);
+  dfs(root, 1);
+
   return max;
 };
 
