@@ -19,22 +19,44 @@ right of n -> 2n + 2
  */
 
 const _from = (arr: any[]): TreeNode => {
-  const build = (node: TreeNode, index: number): TreeNode => {
-    const leftIndex = 2 * index + 1;
-    const rightIndex = 2 * index + 2;
-
-    if (arr[leftIndex] !== undefined) {
-      node.left = build({ val: arr[leftIndex], left: null, right: null }, leftIndex);
+  const nodes = arr.map(x => {
+    if (x != undefined && x != null) {
+      return { val: x, left: null, right: null };
+    } else {
+      return null;
     }
-    if (arr[rightIndex] !== undefined) {
-      node.right = build({ val: arr[rightIndex], left: null, right: null }, rightIndex);
-    }
-    return node;
-  };
+  });
 
-  return build({ val: arr[0], left: null, right: null }, 0);
+  for (let i = 0; i < nodes.length; i++) {
+    if (!nodes[i]) continue;
+
+    const left = i * 2 + 1;
+    const right = i * 2 + 2;
+    nodes[i].left = nodes[left];
+    nodes[i].right = nodes[right];
+  }
+
+  return nodes[0];
+};
+
+const toArray = (root?: TreeNode): any[] => {
+  if (!root) return [];
+  let queue = [root];
+  const arr: any = [];
+
+  while (queue.length) {
+    const node = queue[0];
+    queue = queue.slice(1);
+
+    arr.push(node.val);
+    node.left && queue.push(node.left);
+    node.right && queue.push(node.right);
+  }
+
+  return arr;
 };
 
 export const Tree = {
   from: _from,
+  toArray,
 };
