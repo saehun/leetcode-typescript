@@ -42,3 +42,5 @@ docs/
 
 # Ignore Desktop Service Store
 .DS_Store
+
+src/run.ts
