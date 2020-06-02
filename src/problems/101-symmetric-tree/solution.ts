@@ -1,39 +1,16 @@
 import { TreeNode } from "../../helpers";
 
 
-/**
- *
-          0
-   1          2        == 2**1-1 to 2**2-2
- 3   4     5     6     == 2**2-1 to 2**3-2
-7 8 9 10 11 12 13 14   == 2**3-1 to 2**4-2
-1 -> 2  (1,2)
-3 -> 6  (3,4,5,6)
-4 -> 5
-
- */
-
 const Solution = (root: TreeNode): boolean => {
-  let result = true;
-  if (!root) return true;
 
-  const traverse = (left: TreeNode, right: TreeNode) => {
-    if (left === null || right === null) {
-      if (left !== right) result = false;
-      return;
-    }
+  const isMirror = (left: TreeNode, right: TreeNode): boolean => {
+    if (!left && right || left && !right) return false;
+    if (!left && !right) return true;
 
-    if (left.val !== right.val) {
-      result = false;
-      return;
-    }
-    traverse(left.left, right.right);
-    traverse(left.right, right.left);
+    return left.val === right.val && isMirror(left.left, right.right) && isMirror(left.right, right.left);
   };
 
-  traverse(root.left, root.right);
-
-  return result;
+  return isMirror(root.left, root.right);
 };
 
 export default {
