@@ -19,8 +19,13 @@ case11.next = case10;
 
 const case20: LinkedList = { val: 1, next: null };
 
+const case30: LinkedList = { val: 1, next: null };
+const case31: LinkedList = { val: 2, next: null };
+case30.next = case31;
+
 export default [
   { input: [case00], output: true },
   { input: [case10], output: true },
   { input: [case20], output: false },
+  { input: [case30], output: false },
 ];

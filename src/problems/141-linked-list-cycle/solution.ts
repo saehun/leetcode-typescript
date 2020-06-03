@@ -22,8 +22,30 @@ const Floyd = (head: LinkedList): boolean => {
   return false;
 };
 
+const Solution = (head: LinkedList): boolean => {
+  if (!head) return false;
+  if (head && !head.next) return false;
+  let slow = head;
+  let fast = head.next;
+  while (slow !== fast) {
+    if (!fast?.next?.next) return false;
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+
+  return true;
+};
+
+
+
+
+
+
+
+
 export default {
-  "default": Floyd,
+  "default": Solution,
   Floyd,
   Flag,
+  validator: (x: any) => x,
 };
