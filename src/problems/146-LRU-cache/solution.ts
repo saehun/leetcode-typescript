@@ -27,42 +27,117 @@ class LRUCache2 {
   }
 }
 
+interface Node<T> {
+  value: T;
+  key: number;
+  before: Node<T>;
+  next: Node<T>;
+}
+
+class DoubleLinkedList<T> {
+  head: Node<T>;
+  tail: Node<T>;
+  size: number;
+
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
+  pushHead(key: number, value: T): Node<T> {
+    const node: Node<T> = {
+      before: null,
+      next: null,
+      value,
+      key,
+    };
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      const head = this.head;
+      this.head = node;
+      node.next = head;
+      head.before = node;
+    }
+    this.size++;
+    return node;
+  }
+
+  removeTail(): Node<T> {
+    const { tail } = this;
+    if (!tail) return;
+    this.remove(tail);
+    return tail;
+  }
+
+  remove(node: Node<T>) {
+    const { next, before } = node;
+    if (next) {
+      if (before) {
+        before.next = next;
+        next.before = before;
+      } else {
+        // node === head
+        next.before = null;
+        this.head = next;
+      }
+    } else {
+      if (before) {
+        // node === tail
+        before.next = null;
+        this.tail = before;
+      } else {
+        // node === head && node === tail
+        this.head = null;
+        this.tail = null;
+      }
+    }
+    this.size--;
+  }
+
+}
 
 
 class LRUCache {
   capacity: number;
-  table: Record<number, number>;
-  stack: number[];
+  cache: Record<number, Node<number>>;
+  list: DoubleLinkedList<number>;
 
   constructor(capacity: number) {
     this.capacity = capacity;
-    this.table = {};
-    this.stack = [];
+    this.cache = {};
+    this.list = new DoubleLinkedList<number>();
   }
 
   get(key: number): number {
-    if (key in this.table) {
-      this.stack = this.stack.filter(x => x !== key);
-      this.stack.push(key);
-
-      return this.table[key];
+    const node = this.cache[key];
+    if (node) {
+      if (!(this.list.head === node)) {
+        this.list.remove(node);
+        this.cache[key] = this.list.pushHead(node.key, node.value);
+      }
+      return node.value;
     } else {
       return -1;
     }
   }
 
   put(key: number, value: number) {
-    if (!(key in this.table)) {
-      this.stack.push(key);
-      if (this.stack.length > this.capacity) {
-        delete this.table[this.stack[0]];
-        this.stack = this.stack.slice(1);
-      }
-    } else {
-      this.stack = this.stack.filter(x => x !== key);
-      this.stack.push(key);
+    if (key in this.cache) {
+      this.list.remove(this.cache[key]);
     }
-    this.table[key] = value;
+
+    this.cache[key] = this.list.pushHead(key, value);
+    if (this.list.getSize() > this.capacity) {
+      const { key } = this.list.removeTail();
+      delete this.cache[key];
+    }
   }
 }
 
