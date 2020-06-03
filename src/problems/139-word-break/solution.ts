@@ -48,8 +48,27 @@ const DP: WordBreak = function(s, wordDict) {
   return false;
 };
 
+const Solution: WordBreak = (s, wordDict) => {
+  const arr = Array(s.length + 1).fill(false);
+  arr[0] = true;
+
+  for (let i = 0; i < s.length; i++) {
+    if (!arr[i]) continue;
+    const rest = s.slice(i);
+    for (const word of wordDict) {
+      if (arr[i + word.length]) continue;
+      if (rest.startsWith(word)) {
+        arr[i + word.length] = true;
+      }
+    }
+  }
+
+  return arr[arr.length - 1];
+};
+
 export default {
-  "default": DP,
+  "default": Solution,
   Memoization,
   DP,
+  validator: (x: any) => x,
 };
