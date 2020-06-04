@@ -9,23 +9,27 @@ class MinStack {
   }
 
   push(n: number) {
-    if (!this.arr.length) {
-      this.arr.push(n);
-      this.min = n;
-    } else if (n <= this.min) {
-      this.arr.push(2 * n - this.min);
+    if (this.min == undefined) {
       this.min = n;
     } else {
-      this.arr.push(n);
+      if (this.min >= n) {
+        this.arr.push(this.min);
+        this.min = n;
+      }
     }
+    this.arr.push(n);
   }
 
   pop() {
-    const value = this.top();
-    if (value <= this.min) {
-      this.min = 2 * value - this.arr[this.arr.length - 1];
+    const val = this.arr.pop();
+    if (this.arr.length === 0) {
+      this.min = undefined;
+    } else {
+      if (val === this.min) {
+        this.min = this.arr.pop();
+      }
     }
-    this.arr.pop();
+    return val;
   }
 
   getMin() {
@@ -33,7 +37,7 @@ class MinStack {
   }
 
   top() {
-    return Math.max(this.min, this.arr[this.arr.length - 1]);
+    return this.arr[this.arr.length - 1];
   }
 }
 
