@@ -21,7 +21,7 @@ const DP = (nums: number[]): number => {
     dp[i] += dp[i - 1];
   }
 
-  return dp.reduce((acc, n) => Math.max(acc, n), Number.MIN_SAFE_INTEGER);
+  return Math.max(...dp);
 };
 
 const DP2 = (nums: number[]): number => {
@@ -35,7 +35,15 @@ const DP2 = (nums: number[]): number => {
   return dp.reduce((acc, n) => Math.max(acc, n), Number.MIN_SAFE_INTEGER);
 };
 
+
+const Short = (nums: number[]): number => nums
+  .reduce(
+    ([max, buffer], n, _, __, next = n + buffer) => [Math.max(next, max), Math.max(next, 0)],
+    [Number.MIN_SAFE_INTEGER, 0]
+  )[0];
+
+
 export default {
-  "default": DP2,
+  "default": Short,
   validator: (x: any) => x,
 };
