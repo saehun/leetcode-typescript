@@ -32,8 +32,23 @@ const maxProduct = (nums: number[]): number => {
   return zero ? Math.max(0, max) : max;
 };
 
+const DP = (nums: number[]): number => {
+  let low = nums[0];
+  let high = nums[0];
+  let max = nums[0];
+
+  for (let i = 1; i < nums.length; i++) {
+    const _low = low;
+    low = Math.min(nums[i] * low, nums[i], nums[i] * high);
+    high = Math.max(nums[i] * _low, nums[i], nums[i] * high);
+    max = Math.max(max, high);
+  }
+
+  return max;
+};
+
 export default {
-  "default": maxProduct,
+  "default": DP,
   maxProduct,
   validator: (x: any) => x,
 };
