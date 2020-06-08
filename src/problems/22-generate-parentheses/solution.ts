@@ -1,24 +1,41 @@
 const Solution = (n: number): string[] => {
-  if (n === 0) return [];
-  if (n === 1) return ["()"];
-  const result: any = [[["(", n - 1, n]], [["()", n - 1, n - 1], ["((", n - 2, n]]];
-  for (let i = 2; i < n * 2; i++) {
-    const before = result[i - 1];
-    const next = [];
-    for (const item of before) {
-      if (item[1] === 0) {
-        next.push([item[0] + ")", 0, item[2] - 1]);
-      } else if (item[1] === item[2]) {
-        next.push([item[0] + "(", item[1] - 1, item[2]]);
-      } else {
-        next.push([item[0] + "(", item[1] - 1, item[2]]);
-        next.push([item[0] + ")", item[1], item[2] - 1]);
-      }
+  const result: string[] = [];
+  const recur = (left: number, right: number, text: string) => {
+    if (left < right || left > n) return;
+    if (left + right === n * 2) {
+      return result.push(text);
+    } else {
+      recur(left + 1, right, text + "(");
+      recur(left, right + 1, text + ")");
     }
-    result[i] = next;
-  }
-  return result[n * 2 - 1].map((x: any) => x[0]);
+  };
+  recur(1, 0, "(");
+  return result;
 };
+
+/**
+ *
+
+(defn generateParenthesis [n]
+  (defn f [left right text]
+    (if (or (< left right) (> left n))
+      '()
+      (if (== right n)
+        (list text)
+        (concat (f (+ left 1) right (str text \())
+                (f left (+ 1 right) (str text \)))))))
+    (f 1 0 "("))
+
+generateParenthesis = (n) =>
+  ((f = (left, right, text) =>
+     (left < right || left > n) ? []
+       : (right === n) ? [text]
+       : [...f(left + 1, right, text + "("), ...f(left, right + 1, text + ")")]
+    )(1, 0, "("), result);
+
+
+ */
+
 
 export default {
   "default": Solution,
