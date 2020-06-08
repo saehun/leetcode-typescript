@@ -1,3 +1,5 @@
 export default [
-  { input: [0], output: true },
+  { input: ["1 + 1"], output: 2 },
+  { input: [" 2-1 + 2 "], output: 3 },
+  { input: ["(1+(4+5+2)-3)+(6+8)"], output: 23 },
 ];
