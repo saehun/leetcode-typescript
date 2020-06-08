@@ -57,6 +57,25 @@ const Solution = (s: string): number => {
   return Math.max(max, curMax);
 };
 
+const Solution3 = (s: string): number => {
+  const cache: any = {};
+  const stack = [];
+  let max = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === ")") {
+      if (!stack.length) continue;
+      const matched = stack.pop();
+      const length = i - matched + 1 + (cache[matched - 1] || 0);
+      max = Math.max(max, length);
+      cache[i] = length;
+    } else {
+      stack.push(i);
+    }
+  }
+  return max;
+};
+
 export default {
   "default": Solution,
   validator: (x: any) => x,
