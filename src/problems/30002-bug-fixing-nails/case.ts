@@ -1,7 +1,18 @@
 export default [
   { input: [[1, 1, 3, 3, 3, 4, 5, 5, 5, 5], 2], output: 5 },
   { input: [[1, 1, 3, 3, 4, 5, 5, 5, 5], 2], output: 4 },
+  { input: [[1, 1, 3, 3, 4, 5, 5, 5, 5, 5], 2], output: 5 },
+  { input: [[1, 1, 1, 1, 3, 3, 4, 5, 5, 5, 5, 5], 2], output: 6 },
   { input: [[1, 2], 1], output: 2 },
   { input: [[1, 1], 0], output: 2 },
   { input: [[1, 2], 0], output: 1 },
+  { input: [[1, 1, 1], 2], output: 3 },
+  { input: [[1], 1], output: 1 },
+  { input: [[1], 0], output: 1 },
+  { input: [[2, 2], 2], output: 2 },
+  { input: [[2, 2], 1], output: 2 },
+  { input: [[2, 2], 0], output: 2 },
+  { input: [[2, 3, 3], 1], output: 2 },
+  { input: [[2, 2, 3], 1], output: 3 },
+  { input: [[1, 2, 3], 1], output: 2 },
 ];

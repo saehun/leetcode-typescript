@@ -1,4 +1,5 @@
 const Solution = (S: string): string => {
+  // remove non-digit character and make into array
   const digits = S.replace(/[^\d]/g, "").split("");
 
   const { group } = digits.reduce((acc, digit, i) => {
