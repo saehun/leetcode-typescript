@@ -1,3 +1,3 @@
 export default [
-  { input: [0], output: true },
+  { input: ["ADOBECODEBANC", "ABC"], output: "BANC" },
 ];
